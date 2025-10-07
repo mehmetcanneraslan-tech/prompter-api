@@ -3,13 +3,11 @@ from fastapi.middleware.cors import CORSMiddleware
 from routers import contact
 from database import Base, engine
 
-# Tabloları oluştur
+
 Base.metadata.create_all(bind=engine)
 
-# Uygulama
 app = FastAPI(title="Prompter Backend", version="1.0")
 
-# CORS ayarları
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
@@ -22,7 +20,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Router ekle
 app.include_router(contact.router)
 
 @app.get("/")
