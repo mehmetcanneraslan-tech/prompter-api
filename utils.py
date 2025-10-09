@@ -40,3 +40,31 @@ def send_contact_email(name, email, phone, message):
             print("📨 E-posta başarıyla gönderildi (SSL, verify off).")
     except Exception as e:
         print(f"❌ E-posta gönderimi başarısız: {e}")
+
+# ✅ Kullanıcıya bilgilendirme maili gönder
+def send_confirmation_email(to_email, name):
+    subject = "Mesajınız Başarıyla İletildi"
+    body = f"""
+    Merhaba {name},
+
+    Mesajınızı aldık. En kısa sürede sizinle iletişime geçeceğiz.
+    Gönderiminiz başarıyla alınmıştır.
+
+    Saygılarımızla,
+    {os.getenv("COMPANY_NAME", "Kurumsal Destek Ekibi")}
+    """
+
+    msg = MIMEMultipart()
+    msg["From"] = SMTP_USER
+    msg["To"] = to_email
+    msg["Subject"] = subject
+    msg.attach(MIMEText(body, "plain"))
+
+    try:
+        context = ssl._create_unverified_context()
+        with smtplib.SMTP_SSL(SMTP_HOST, SMTP_PORT, context=context) as server:
+            server.login(SMTP_USER, SMTP_PASS)
+            server.send_message(msg)
+            print(f"📩 {to_email} adresine bilgilendirme e-postası gönderildi.")
+    except Exception as e:
+        print(f"❌ Bilgilendirme e-postası gönderilemedi: {e}")

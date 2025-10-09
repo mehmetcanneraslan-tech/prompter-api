@@ -1,4 +1,4 @@
-from pydantic import BaseModel, EmailStr
+from pydantic import BaseModel, EmailStr, constr
 from datetime import datetime
 
 class ContactMessageCreate(BaseModel):
@@ -12,4 +12,4 @@ class ContactMessageOut(ContactMessageCreate):
     created_at: datetime
 
     class Config:
-        orm_mode = True
+        from_attributes = True

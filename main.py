@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from routers import contact
 from database import Base, engine
-
+from routers import chatbot
 
 Base.metadata.create_all(bind=engine)
 
@@ -19,7 +19,7 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
+app.include_router(chatbot.router)
 app.include_router(contact.router)
 
 @app.get("/")
