@@ -59,7 +59,7 @@ def send_confirmation_email(to_email, name):
     msg["To"] = to_email
     msg["Subject"] = subject
     msg.attach(MIMEText(body, "plain"))
-
+  #deneme
     try:
         context = ssl._create_unverified_context()
         with smtplib.SMTP_SSL(SMTP_HOST, SMTP_PORT, context=context) as server:
